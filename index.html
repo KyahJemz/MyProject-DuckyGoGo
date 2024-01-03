@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activity 4 - Stephen Regan James Bacolod Layson</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: antiquewhite;
+            background-image: url(images/background_body.jpg);
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: fixed;
+        }
+        #title {
+            font-family: fantasy;
+            font-size: xx-large;
+            color: rgba(0, 0, 0, 0.568);
+            position: absolute;
+            text-align: center;
+            width: 100%;
+            left: 50%;
+            top: 8%;
+            transform: translate(-50%, -50%);
+        }
+        #description {
+            padding-top: 10px;
+            width: 725px;
+            margin: auto;
+        }
+        #game {
+            width: 750px;
+            height: 238px;
+            margin: auto;
+            margin-top: 100px;
+            border: 3px solid rgba(0, 0, 0, 0.712);
+            position: relative;
+            overflow: hidden;
+            box-shadow: rgba(2, 2, 2, 0.438) 0px 8px 24px;
+        }
+        #background {
+            top: 0px;
+            position: absolute;
+            z-index: 0;
+            width: 3000px;
+            height: 100%;
+            background-image: url(images/background.png);
+            background-size: contain;
+        }
+        #ground {
+            top: 190px;
+            position: absolute;
+            height: 50px;
+            width: 3000px;
+            background-image: url(images/ground.png);
+            background-size: contain;
+        }
+        #menu1 {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            animation: menuTab 750ms;
+            position: absolute;
+            display: block;
+            z-index: 1;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.466);
+            position: relative;
+        }
+        #menu1 .header {
+            font-family: fantasy;
+            font-size: xx-large;
+            color: rgba(139, 148, 17, 0.767);
+            position: absolute;
+            left: 50%;
+            top: 25%;
+            transform: translate(-50%, -50%);
+        }
+        #menu1 .text {
+            position: absolute;
+            right: 5px;
+            bottom: 5px;
+            font-size: small;
+            text-align: right;
+            
+        }
+        #menu1 #playBtn {
+            top: 50%;
+            left: 50%;
+            position: absolute;
+            transform: translate(-50%, -50%);
+        }
+        #menu1 #playBtn button {
+            height: 30px;
+            width: 100px;
+           background-color: rgb(119, 253, 119);
+        }
+        #menu2 {
+            position: absolute;
+            display: none;
+            z-index: 1;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            height: 200px;
+            width: 200px;
+            background-color: rgba(0, 0, 0, 0.342);
+            animation: menuTab 750ms;
+            border-radius: 10px;
+            border: 3px solid rgb(255, 255, 255);
+            box-shadow: rgba(2, 2, 2, 0.2) 0px 8px 24px;
+        }
+        #menu2 .header {
+            font-family: fantasy;
+            font-size: x-large;
+            color: rgba(255, 255, 255, 0.904);
+            position: absolute;
+            width: 100%;
+            top: 5%;
+            text-align: center;
+        }
+        #menu2 .text {
+            position: absolute;
+            width: 100%;
+            top: 30%;
+            font-size: small;
+            color: rgba(255, 255, 255, 0.904);
+            margin: 20px; 
+        }
+        #menu2 #playBtn {
+            top: 95%;
+            left: 50%;
+            position: absolute;
+            transform: translate(-50%, -100%);
+        }
+        #menu2 #playBtn button {
+            height: 25px;
+            width: 100px;
+           background-color: rgb(119, 253, 119);
+        }
+        #character {
+            display: none;
+            z-index: 1;
+            left: 30px;
+            top: 149px;
+            position: relative;
+            width: 50px;
+            height: 50px;
+            background-image: url(images/duck_idle.png);
+            background-size: cover;
+        }
+        #object {
+            z-index: 2;
+            display: none;
+            top: 124px;
+            left: 750px;
+            right: 0;
+            border-radius: 50%;
+            position: relative;
+            width: 25px;
+            height: 25px;
+            border: 1px solid black;
+            background-color: black;
+            background-image: url(images/rock.png);
+            background-size:contain;
+        }
+        #score {
+            display: none;
+            top: 10px;
+            left: 10px;
+            z-index: 1;
+            position: absolute;
+            width: fit-content;
+        }
+        button:hover {
+            transform: scale(1.1);
+            transition-duration: 500ms;
+        }
+        @keyframes jump {
+            0% {
+                top: 149px;
+                background-image: url(images/duck_idle.png);
+            }
+            25% {
+                top: 100px;
+            }
+            75% {
+                top: 100px;
+            }
+            100% {
+                top: 149px;
+                background-image: url(images/duck_idle.png);
+            }
+        }
+        @keyframes walk {
+            0%{
+                background-image: url(images/duck_walk_1.png);
+            }
+            50% {
+                background-image: url(images/duck_walk_2.png);
+            }
+            100%{
+                background-image: url(images/duck_walk_1.png);
+            }
+        }
+        @keyframes objectMove {
+            0% {
+                left: 725px;
+                rotate: 0deg;
+            }
+            100% {
+                left: -25px;
+                rotate: -1000deg;
+            }
+        }
+        @keyframes terrain {
+            0% {
+                transform: translateX(0px);
+                
+            }
+            100%{
+                transform: translateX(-1500px);
+            }   
+        }
+        @keyframes hit {
+            0% {
+                rotate: 0deg;
+                left: 30px;
+            } 
+            100%{
+                rotate: -750deg;
+                left: -75px;
+            }  
+        }
+        @keyframes menuTab {
+            0% {
+                top:-50%;
+            } 
+            100%{
+                top:50%;
+            }  
+        }
+        .objectAnim {
+            animation: objectMove 3000ms infinite linear;
+        }
+        .jumpAnim{
+            animation: jump 1000ms;
+        }
+        .walkAnim {
+            animation: walk 750ms infinite;
+        }
+        .terrainAnim {
+            animation: terrain 40s infinite linear; 
+        }
+        .hitAnim {
+            animation: hit 1000ms; 
+        }
+        
+    </style>
+</head>
+<body>
+        <audio id="BGM_Menu" src="sound/BGM_Menu.mp3" loop="loop" type="audio/mp3"></audio>
+        <audio id="BGM_Game" src="sound/BGM_Game.mp3" loop="loop" type="audio/mp3"></audio>
+        <audio id="BGFX_EndQuak" src="sound/BGFX_EndQuak.mp3" type="audio/mp3"></audio>
+        <audio id="BGFX_JumpQuak1" src="sound/BGFX_JumpQuak1.mp3" type="audio/mp3"></audio>
+        <audio id="BGFX_JumpQuak2" src="sound/BGFX_JumpQuak2.mp3" type="audio/mp3"></audio>
+        <audio id="BGFX_JumpQuak3" src="sound/BGFX_JumpQuak3.mp3" type="audio/mp3"></audio>
+
+    <div id="game">
+        <div id="menu1">
+            <div id="playBtn">
+                <button onclick="start()">Play</button>
+            </div>
+            <div class="header">Ducky Go Go</div>
+            <div class="text">
+                Activity By: Stephen Regan James Bacolod Layson <br>
+                SSCR - DC || BSIT 3
+            </div>
+        </div>
+        <div id="menu2">
+            <div id="play">
+                <div id="playBtn">
+                    <button onclick="menu()">Back to Menu</button>
+                </div>
+            </div>
+            <div class="header">Game Over</div>
+            <div id="gamescore" class="text">Your Score : ???</div>
+        </div>
+        <div id="score"></div>
+        <div id="background"></div>
+        <div id="character"></div>
+        <div id="object"></div>
+        <div id="ground"></div>
+    </div>
+    <div id="title"><h1>Ducky Go Go</h1></div>
+    <div id="description">
+        Ducky Go Go<br>
+        Activity 4 - Stephen Regan James Bacolod Layson<br>
+        SSCR - DC || BSIT 3<br><br>
+        Controls:<br>
+        Tap/Click = Jump
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
